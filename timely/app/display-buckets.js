@@ -79,7 +79,6 @@ displayBuckets.histogram = (buckets, options) => {
 
 	sortedBuckets.forEach(bucket => {
 
-		const width = Math.floor(terminalWidth * (bucket.count / maximumCount))
 
 		var message = ''
 
@@ -91,11 +90,21 @@ displayBuckets.histogram = (buckets, options) => {
 			? moment(bucket.bucketDate).format('hh:mm:ss')
 			: optionalDateParts + ' ' + moment(bucket.bucketDate).format('hh:mm:ss')
 
-		message += ' ' + constants.characters.fullBar.repeat(width)
+		message += ' '
+		const histogramWidth = Math.floor(Math.max(terminalWidth - message.length, 0) * (bucket.count / maximumCount))
+
+		if (histogramWidth === 0) {
+			console.error('terminal too narrow!')
+			process.exit(1)
+		}
+
+		message += constants.characters.fullBar.repeat(histogramWidth)
 
 		console.log(message)
 
 	})
+
+	console.log('-'.repeat(terminalWidth) + ' ' + maximumCount + ' matches')
 
 }
 
