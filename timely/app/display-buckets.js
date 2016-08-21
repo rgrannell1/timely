@@ -56,6 +56,20 @@ displayBuckets.json = (buckets, options) => {
 
 displayBuckets.histogram = (buckets, options) => {
 
+	const partIndex     = Infinity
+	const optionalParts = ['YYYY', 'MMM', 'Do']
+
+	optionalParts.forEach((part, index) => {
+
+		const minPart = moment(buckets.extrema.min).format(part)
+		const maxPart = moment(buckets.extrema.max).format(part)
+
+		if (minPart !== maxPart) {
+			partIndex = index
+		}
+
+	})
+
 	const sortedBuckets = sortBuckets(buckets.buckets)
 	const maximumCount  = sortedBuckets.reduce((max, current) => {
 		return Math.max(max, current.count)
@@ -63,15 +77,23 @@ displayBuckets.histogram = (buckets, options) => {
 
 	const terminalWidth = 100
 
-	console.log(
-		buckets.extrema
-	)
-
 	sortedBuckets.forEach(bucket => {
 
 		const width = Math.floor(terminalWidth * (bucket.count / maximumCount))
 
-		console.log(constants.characters.fullBar.repeat(width))
+		var message = ''
+
+		const optionalDateParts = optionalParts.slice(partIndex).map(part => {
+			return moment(bucket.bucketDate).format(part)
+		}).join(' ')
+
+		message += optionalParts.slice(partIndex).length === 0
+			? moment(bucket.bucketDate).format('hh:mm:ss')
+			: optionalDateParts + ' ' + moment(bucket.bucketDate).format('hh:mm:ss')
+
+		message += ' ' + constants.characters.fullBar.repeat(width)
+
+		console.log(message)
 
 	})
 
