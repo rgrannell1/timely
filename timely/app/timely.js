@@ -28,6 +28,7 @@ process.on('uncaughtException', err => {
 const readline       = require('readline')
 
 const constants      = require('../commons/constants')
+const utils          = require('../commons/utils')
 const updateBuckets  = require('../app/update-buckets')
 const parseRecord    = require('../app/parse-record')
 const displayBuckets = require('../app/display-buckets')
@@ -66,6 +67,8 @@ const timely = rawArgs => {
 
 	}, constants.units.secondsInMilliseconds)
 
+	var lineCount = 0
+
 	readline.createInterface({input: process.stdin})
 		.on('line', line => {
 
@@ -85,10 +88,12 @@ const timely = rawArgs => {
 		})
 		.on('close', ( ) => {
 
-			displayBuckets(buckets, {
+			lineCount = displayBuckets(buckets, {
 				displayMethod: args.displayMethod,
 				bucket:        args.by.seconds
 			})
+
+			utils.eraseLines(lineCount)
 
 			clearInterval(displayPid)
 

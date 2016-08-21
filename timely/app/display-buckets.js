@@ -79,10 +79,9 @@ displayBuckets.histogram = (buckets, options) => {
 
 	const terminalWidth = 100
 
-	sortedBuckets.forEach(bucket => {
-
-
 		var message = ''
+
+	sortedBuckets.forEach(bucket => {
 
 		const optionalDateParts = optionalParts.slice(partIndex).map(part => {
 			return moment(bucket.bucketDate).format(part)
@@ -100,26 +99,19 @@ displayBuckets.histogram = (buckets, options) => {
 			process.exit(1)
 		}
 
-		message += constants.characters.fullBar.repeat(histogramWidth)
-
-		const lineCount = message.split('\n').length
-
-		for (var ith = 0; ith < lineCount; ++ith) {
-
-			process.stderr.write('\x1b[A')
-			process.stderr.write('\x1b[K')
-
-		}
-
-		console.log(message)
+		message += constants.characters.fullBar.repeat(histogramWidth) + '\n'
 
 	})
 
-	console.log('-'.repeat(terminalWidth))
-	console.log(`max matches:\t${maximumCount}`)
-	console.log(`total matches:\t${totalCount}`)
-	console.log(`start date:\t${ moment(buckets.extrema.min).format('YYYY MMM Do hh:mm:ss') }`)
-	console.log(`end date:\t${   moment(buckets.extrema.max).format('YYYY MMM Do hh:mm:ss') }`)
+	message += '-'.repeat(terminalWidth) + '\n'
+	message += `max matches:\t${maximumCount}\n`
+	message += `total matches:\t${totalCount}\n`
+	message += `start date:\t${ moment(buckets.extrema.min).format('YYYY MMM Do hh:mm:ss') }\n`
+	message += `end date:\t${   moment(buckets.extrema.max).format('YYYY MMM Do hh:mm:ss') }\n`
+
+	console.log(message)
+
+	return message.split('\n').length
 
 }
 
