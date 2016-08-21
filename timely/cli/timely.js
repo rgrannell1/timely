@@ -16,7 +16,7 @@ const timely = require('../app/timely')
 
 const args = neodoc.run(`
 Name:
-	timely - summarise log occurrence over a time-range.
+	timely - summarise timestamped text-occurrence over a time-range.
 Usage:
 	timely [-s <time> | --since <time>] [-u <time> | --until <time>] [-b <group> | --by <group>] [-f <fmt> | --format <fmt>] [-d <str> | --display <str>]
 	timely (-h | --help | --version)
@@ -24,7 +24,7 @@ Version:
 	0.1.0
 Description:
 	*** *** ***
-Arguments:
+Arguments
 	*** *** ***
 Options:
 	-b <group>, --by <group>     The size of each 'bucket' in seconds. [default: "24h"]

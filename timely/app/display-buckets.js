@@ -4,7 +4,24 @@
 
 
 
-const moment = require('moment')
+const moment    = require('moment')
+
+const constants = require('../commons/constants')
+
+
+
+
+
+const sortBuckets = buckets => {
+
+	return Object.keys(buckets)
+		.map(
+			bucketId => buckets[bucketId])
+		.sort(
+			(bucket0, bucket1) => bucket0.bucketDate.getTime( ) - bucket1.bucketDate.getTime( ))
+
+}
+
 
 
 
@@ -16,19 +33,14 @@ const displayBuckets = (buckets, options) => {
 
 displayBuckets.json = (buckets, options) => {
 
-	const bucketSummary = Object.keys(buckets.buckets)
-		.map(
-			bucketId => buckets.buckets[bucketId])
-		.sort(
-			(bucket0, bucket1) => bucket0.bucketDate.getTime( ) - bucket1.bucketDate.getTime( ))
-		.map( ({count, bucketDate}) => {
+	const bucketSummary = sortBuckets(buckets.buckets).map( ({count, bucketDate}) => {
 
-			return {
-				time: bucketDate.getTime( ),
-				count
-			}
+		return {
+			time: bucketDate.getTime( ),
+			count
+		}
 
-		} )
+	})
 
 	console.log( JSON.stringify({
 		buckets:   bucketSummary,
@@ -41,6 +53,30 @@ displayBuckets.json = (buckets, options) => {
 	}) )
 
 }
+
+displayBuckets.histogram = (buckets, options) => {
+
+	const sortedBuckets = sortBuckets(buckets.buckets)
+	const maximumCount  = sortedBuckets.reduce((max, current) => {
+		return Math.max(max, current.count)
+	}, -Infinity)
+
+	const terminalWidth = 100
+
+	console.log(
+		buckets.extrema
+	)
+
+	sortedBuckets.forEach(bucket => {
+
+		const width = Math.floor(terminalWidth * (bucket.count / maximumCount))
+
+		console.log(constants.characters.fullBar.repeat(width))
+
+	})
+
+}
+
 
 
 
