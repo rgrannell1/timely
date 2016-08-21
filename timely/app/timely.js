@@ -67,41 +67,32 @@ const timely = rawArgs => {
 	}, constants.units.secondsInMilliseconds)
 
 	readline.createInterface({input: process.stdin})
-	.on('line', line => {
+		.on('line', line => {
 
-		var filtersMatch = true
+			const filtersMatch = args.filters.reduce((filtersMatch, filter) => {
+				return filtersMatch && filter.test(line)
+			}, true)
 
-		args.filters.forEach(filter => {
+			if (filtersMatch) {
 
+				updateBuckets( buckets, parseRecord(line, {
+					format: args.format,
+					bucket: args.by.seconds
+				}) )
 
-			if (!filter.test(line)) {
-				filtersMatch = false
 			}
 
 		})
+		.on('close', ( ) => {
 
-		if (filtersMatch) {
+			displayBuckets(buckets, {
+				displayMethod: args.displayMethod,
+				bucket:        args.by.seconds
+			})
 
-			updateBuckets( buckets, parseRecord(line, {
-				format: args.format,
-				bucket: args.by.seconds
-			}) )
+			clearInterval(displayPid)
 
-		}
-
-
-	})
-	.on('close', ( ) => {
-
-		displayBuckets(buckets, {
-			displayMethod: args.displayMethod,
-			bucket:        args.by.seconds
 		})
-
-		clearInterval(displayPid)
-
-	})
-
 
 }
 
