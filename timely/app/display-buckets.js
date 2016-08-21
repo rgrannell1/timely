@@ -11,12 +11,10 @@ const moment = require('moment')
 
 
 const displayBuckets = (buckets, options) => {
-
-	displayBuckets.jsonTable(buckets, options)
-
+	displayBuckets[options.displayMethod](buckets, options)
 }
 
-displayBuckets.jsonTable = (buckets, options) => {
+displayBuckets.json = (buckets, options) => {
 
 	const bucketSummary = Object.keys(buckets.buckets)
 		.map(

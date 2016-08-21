@@ -68,7 +68,8 @@ const timely = rawArgs => {
 	})
 	.on('close', ( ) => {
 		displayBuckets(buckets, {
-			bucket: args.by.seconds
+			displayMethod: args.displayMethod,
+			bucket:        args.by.seconds
 		})
 	})
 
@@ -78,8 +79,9 @@ const timely = rawArgs => {
 timely.preprocess = rawArgs => {
 
 	return {
-		by:     timely.preprocess.by(rawArgs['--by']),
-		format: rawArgs['--format']
+		by:            timely.preprocess.by(rawArgs['--by']),
+		displayMethod: rawArgs['--display'],
+		format:        rawArgs['--format']
 	}
 
 }
