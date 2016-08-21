@@ -5,6 +5,7 @@
   "bin": {
     "timely": "src/cli/timely.js"
   },
+  "preferGlobal": true,
   "dependencies": {
     "moment": "^2.14.1",
     "neodoc": "^0.10.1"
