@@ -8,8 +8,18 @@ const updateBuckets = (buckets, parsedRecord) => {
 
 	const recordTime = parsedRecord.date
 
-	buckets.extrema.min = Math.min(buckets.extrema.min, parsedRecord.bucket)
-	buckets.extrema.max = Math.max(buckets.extrema.max, parsedRecord.bucket)
+	buckets.extrema = {
+
+		min: buckets.extrema.min.getTime( ) < parsedRecord.bucketDate.getTime( )
+			? buckets.extrema.min
+			: parsedRecord.bucketDate,
+
+		max: buckets.extrema.max.getTime( ) > parsedRecord.bucketDate.getTime( )
+			? buckets.extrema.max
+			: parsedRecord.bucketDate
+
+	}
+
 
 	if (buckets.buckets.hasOwnProperty(parsedRecord.bucket)) {
 
@@ -23,8 +33,6 @@ const updateBuckets = (buckets, parsedRecord) => {
 		}
 
 	}
-
-	console.log(JSON.stringify(buckets))
 
 }
 

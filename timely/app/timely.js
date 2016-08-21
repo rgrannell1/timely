@@ -25,10 +25,12 @@ process.on('uncaughtException', err => {
 
 
 
-const constants     = require('../commons/constants')
-const readStdin     = require('../fs/read-file-stream')
-const updateBuckets = require('../app/update-buckets')
-const parseRecord   = require('../app/parse-record')
+const readline       = require('readline')
+
+const constants      = require('../commons/constants')
+const updateBuckets  = require('../app/update-buckets')
+const parseRecord    = require('../app/parse-record')
+const displayBuckets = require('../app/display-buckets')
 
 
 
@@ -50,17 +52,26 @@ const timely = rawArgs => {
 
 		},
 		extrema: {
-			max: -Infinity,
-			min: +Infinity
+			max: new Date(0),
+			min: new Date(2 * Date.now( ))
 		}
 	}
 
-	readStdin(line => {
+	readline.createInterface({input: process.stdin})
+	.on('line', line => {
+
 		updateBuckets( buckets, parseRecord(line, {
 			format: args.format,
 			bucket: args.by.seconds
 		}) )
+
 	})
+	.on('close', ( ) => {
+		displayBuckets(buckets, {
+			bucket: args.by.seconds
+		})
+	})
+
 
 }
 
@@ -77,8 +88,8 @@ timely.preprocess.by = selector => {
 
 	const units = Object.keys(constants.timeBucketUnit).filter(unit => selector.endsWith(unit))
 	const unit  = units.length === 0
-		? units[0]
-		: constants.defaultUnit
+		? constants.defaultUnit
+		: units[0]
 
 	const conversion = constants.timeBucketUnit[unit]
 	const quantity   = selector.match(/^[0-9]+/)
@@ -89,7 +100,6 @@ timely.preprocess.by = selector => {
 		process.exit(1)
 
 	} else {
-
 		return {
 			unit,
 			conversion,
