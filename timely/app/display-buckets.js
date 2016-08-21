@@ -102,6 +102,15 @@ displayBuckets.histogram = (buckets, options) => {
 
 		message += constants.characters.fullBar.repeat(histogramWidth)
 
+		const lineCount = message.split('\n').length
+
+		for (var ith = 0; ith < lineCount; ++ith) {
+
+			process.stderr.write('\x1b[A')
+			process.stderr.write('\x1b[K')
+
+		}
+
 		console.log(message)
 
 	})
