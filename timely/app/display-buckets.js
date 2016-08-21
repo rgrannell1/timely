@@ -109,6 +109,8 @@ displayBuckets.histogram = (buckets, options) => {
 	console.log('-'.repeat(terminalWidth))
 	console.log(`max matches:\t${maximumCount}`)
 	console.log(`total matches:\t${totalCount}`)
+	console.log(`start date:\t${ moment(buckets.extrema.min).format('YYYY MMM Do hh:mm:ss') }`)
+	console.log(`end date:\t${   moment(buckets.extrema.max).format('YYYY MMM Do hh:mm:ss') }`)
 
 }
 
