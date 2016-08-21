@@ -75,6 +75,8 @@ displayBuckets.histogram = (buckets, options) => {
 		return Math.max(max, current.count)
 	}, -Infinity)
 
+	const totalCount = sortedBuckets.reduce((acc, current) => acc + current.count, 0)
+
 	const terminalWidth = 100
 
 	sortedBuckets.forEach(bucket => {
@@ -104,7 +106,9 @@ displayBuckets.histogram = (buckets, options) => {
 
 	})
 
-	console.log('-'.repeat(terminalWidth) + ' ' + maximumCount + ' matches')
+	console.log('-'.repeat(terminalWidth))
+	console.log(`max matches:\t${maximumCount}`)
+	console.log(`total matches:\t${totalCount}`)
 
 }
 
