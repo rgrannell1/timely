@@ -56,7 +56,7 @@ displayBuckets.json = (buckets, options) => {
 
 displayBuckets.histogram = (buckets, options) => {
 
-	const partIndex     = Infinity
+	var partIndex = Infinity
 	const optionalParts = ['YYYY', 'MMM', 'Do']
 
 	optionalParts.forEach((part, index) => {
