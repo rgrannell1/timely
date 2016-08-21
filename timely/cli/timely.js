@@ -18,7 +18,7 @@ const args = neodoc.run(`
 Name:
 	timely - summarise timestamped text-occurrence over a time-range.
 Usage:
-	timely [-s <time> | --since <time>] [-u <time> | --until <time>] [-b <group> | --by <group>] [-f <fmt> | --format <fmt>] [-d <str> | --display <str>]
+	timely [-s <time> | --since <time>] [-u <time> | --until <time>] [-b <group> | --by <group>] [-f <fmt> | --format <fmt>] [-d <str> | --display <str>] [-m <str>... | --filter <str>...]
 	timely (-h | --help | --version)
 Version:
 	0.1.0
@@ -33,6 +33,7 @@ Options:
 	-u <time>, --until <time>    The time after which to exclude lines. By default, this is set to the start of UNIX-time, 1970.
 	-f <fmt>, --format <fmt>     The time format. [default: "syslog"]
 	-d <str>, --display <str>    The method by which to display the summarised input. [default: "json"]
+	-m <str>, --filter <str>     Only analyse logs that match the supplied regular expression filter(s) [default: "."]
 	-h, --help                   Display this documentation.
 
 `, {

@@ -69,10 +69,26 @@ const timely = rawArgs => {
 	readline.createInterface({input: process.stdin})
 	.on('line', line => {
 
-		updateBuckets( buckets, parseRecord(line, {
-			format: args.format,
-			bucket: args.by.seconds
-		}) )
+		var filtersMatch = true
+
+		args.filters.forEach(filter => {
+
+
+			if (!filter.test(line)) {
+				filtersMatch = false
+			}
+
+		})
+
+		if (filtersMatch) {
+
+			updateBuckets( buckets, parseRecord(line, {
+				format: args.format,
+				bucket: args.by.seconds
+			}) )
+
+		}
+
 
 	})
 	.on('close', ( ) => {
@@ -91,10 +107,26 @@ const timely = rawArgs => {
 
 timely.preprocess = rawArgs => {
 
+	const filters = rawArgs['--filter'].map(filter => {
+
+		try {
+
+			return new RegExp(filter)
+
+		} catch (err) {
+
+			console.log('failed to parse supplied pattern.')
+			process.exit(1)
+
+		}
+
+	})
+
 	return {
 		by:            timely.preprocess.by(rawArgs['--by']),
 		displayMethod: rawArgs['--display'],
-		format:        rawArgs['--format']
+		format:        rawArgs['--format'],
+		filters
 	}
 
 }
