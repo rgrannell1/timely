@@ -1,0 +1,16 @@
+name:        timely
+version:     v0.1.0
+summary:     *** *** *** ***
+confinement: strict
+description: *** *** *** ***
+
+apps:
+  timely:
+    command: bin/timely
+    plugs: [home]
+
+parts:
+  timely:
+    plugin: nodejs
+    node-packages:
+      - rgrannell1/timely
