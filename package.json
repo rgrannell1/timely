@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "bin": {
-    "timely": "src/cli/timely.js"
+    "timely": "timely/cli/timely.js"
   },
   "preferGlobal": true,
   "dependencies": {
