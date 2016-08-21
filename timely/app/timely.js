@@ -57,6 +57,15 @@ const timely = rawArgs => {
 		}
 	}
 
+	const displayPid = setInterval(( ) => {
+
+		displayBuckets(buckets, {
+			displayMethod: args.displayMethod,
+			bucket:        args.by.seconds
+		})
+
+	}, constants.units.secondsInMilliseconds)
+
 	readline.createInterface({input: process.stdin})
 	.on('line', line => {
 
@@ -67,10 +76,14 @@ const timely = rawArgs => {
 
 	})
 	.on('close', ( ) => {
+
 		displayBuckets(buckets, {
 			displayMethod: args.displayMethod,
 			bucket:        args.by.seconds
 		})
+
+		clearInterval(displayPid)
+
 	})
 
 

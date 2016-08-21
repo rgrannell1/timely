@@ -95,7 +95,7 @@ displayBuckets.histogram = (buckets, options) => {
 		message += ' '
 		const histogramWidth = Math.floor(Math.max(terminalWidth - message.length, 0) * (bucket.count / maximumCount))
 
-		if (histogramWidth === 0) {
+		if (terminalWidth - message.length === 0) {
 			console.error('terminal too narrow!')
 			process.exit(1)
 		}

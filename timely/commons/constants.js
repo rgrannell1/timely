@@ -14,7 +14,10 @@ const constants = {
 	characters: {
 		fullBar: '█'
 	},
-	defaultUnit: 's'
+	defaultUnit: 's',
+	units: {
+		secondsInMilliseconds: 1000
+	}
 }
 
 

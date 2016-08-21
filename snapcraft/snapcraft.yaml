@@ -1,13 +1,12 @@
 name:        timely
 version:     v0.1.0
-summary:     *** *** *** ***
+summary:     summarise timestamped text-occurrence over a time-range.
 confinement: strict
-description: *** *** *** ***
+description: summarise timestamped text-occurrence over a time-range.
 
 apps:
   timely:
     command: bin/timely
-    plugs: [home]
 
 parts:
   timely:
