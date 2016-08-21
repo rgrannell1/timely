@@ -6,10 +6,15 @@ const constants = {
 		'm': 60,
 		's': 1
 	},
-	timeRegexps: [
-
-	]
+	timestamps: {
+		syslog: {
+			regex: '[a-zA-z]{3}[ ]+[0-9]{1,2}[ ]+[0-9]{1,2}:[0-9]+:[0-9]+'
+		}
+	},
+	defaultUnit: 's'
 }
+
+
 
 
 

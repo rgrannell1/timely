@@ -6,7 +6,7 @@
 
 
 const userFailingErrorMesasage = `Something has went terribly wrong!
-Please report the following error message to https://github.com/rgrannell1/kale/issues,
+Please report the following error message to https://github.com/rgrannell1/timely/issues,
 (along with the input text if possible):
 `
 
@@ -25,11 +25,10 @@ process.on('uncaughtException', err => {
 
 
 
-const constants   = require('../commons/constants')
-const readStdin   = require('../fs/read-file-stream')
-const parseRecord = require('../app/parse-record')
-
-const events    = require('events')
+const constants     = require('../commons/constants')
+const readStdin     = require('../fs/read-file-stream')
+const updateBuckets = require('../app/update-buckets')
+const parseRecord   = require('../app/parse-record')
 
 
 
@@ -37,8 +36,7 @@ const events    = require('events')
 
 const timely = rawArgs => {
 
-	const emitter = new events.EventEmitter( )
-	const args    = timely.preprocess(rawArgs)
+	const args = timely.preprocess(rawArgs)
 
 	if (args.version) {
 
@@ -47,35 +45,43 @@ const timely = rawArgs => {
 
 	}
 
+	const buckets = {
+		buckets: {
+
+		},
+		extrema: {
+			max: -Infinity,
+			min: +Infinity
+		}
+	}
+
 	readStdin(line => {
-
-		parseRecord(line)
-
+		updateBuckets( buckets, parseRecord(line, {
+			format: args.format,
+			bucket: args.by.seconds
+		}) )
 	})
-
-	return emitter
 
 }
 
 timely.preprocess = rawArgs => {
 
 	return {
-		by: timely.preprocess.by(rawArgs['--by'])
+		by:     timely.preprocess.by(rawArgs['--by']),
+		format: rawArgs['--format']
 	}
 
 }
 
-timely.preprocess.by = bySelector => {
+timely.preprocess.by = selector => {
 
-	const units = Object.keys(constants.timeBucketUnit)
-		.filter(unit => bySelector.endsWith(unit))
-
-	const unit = units.length === 0
+	const units = Object.keys(constants.timeBucketUnit).filter(unit => selector.endsWith(unit))
+	const unit  = units.length === 0
 		? units[0]
-		: 's'
+		: constants.defaultUnit
 
 	const conversion = constants.timeBucketUnit[unit]
-	const quantity   = bySelector.match(/^[0-9]+/)
+	const quantity   = selector.match(/^[0-9]+/)
 
 	if (quantity.length === 0) {
 
