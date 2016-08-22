@@ -28,7 +28,7 @@ const sortBuckets = buckets => {
 
 
 const displayBuckets = (buckets, options) => {
-	displayBuckets[options.displayMethod](buckets, options)
+	return displayBuckets[options.displayMethod](buckets, options)
 }
 
 displayBuckets.json = (buckets, options) => {

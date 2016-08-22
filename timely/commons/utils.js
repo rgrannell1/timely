@@ -4,6 +4,14 @@
 
 
 
+
+const constants = require('../commons/constants')
+
+
+
+
+
+
 const utils = { }
 
 
@@ -13,8 +21,8 @@ utils.eraseLines = lineCount => {
 
 	for (var ith = 0; ith < lineCount; ++ith) {
 
-		process.stderr.write('\x1b[A')
-		process.stderr.write('\x1b[K')
+		process.stderr.write(constants.escapeSequences.lineUp)
+		process.stderr.write(constants.escapeSequences.lineDelete)
 
 	}
 

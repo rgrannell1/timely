@@ -12,7 +12,11 @@ const constants = {
 		}
 	},
 	characters: {
-		fullBar: '█'
+		fullBar:    '█',
+	},
+	escapeSequences: {
+		lineUp:     '\x1b[A',
+		lineDelete: '\x1b[K'
 	},
 	defaultUnit: 's',
 	units: {
