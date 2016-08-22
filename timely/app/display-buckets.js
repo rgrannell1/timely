@@ -56,7 +56,7 @@ displayBuckets.json = (buckets, options) => {
 
 displayBuckets.histogram = (buckets, options) => {
 
-	var partIndex = Infinity
+	var partIndex       = Infinity
 	const optionalParts = ['YYYY', 'MMM', 'Do']
 
 	optionalParts.forEach((part, index) => {
@@ -93,11 +93,6 @@ displayBuckets.histogram = (buckets, options) => {
 
 		message += ' '
 		const histogramWidth = Math.floor(Math.max(terminalWidth - message.length, 0) * (bucket.count / maximumCount))
-
-		if (terminalWidth - message.length === 0) {
-			console.error('terminal too narrow!')
-			process.exit(1)
-		}
 
 		message += constants.characters.fullBar.repeat(histogramWidth) + '\n'
 

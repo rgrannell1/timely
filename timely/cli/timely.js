@@ -23,7 +23,7 @@ Usage:
 Version:
 	0.1.0
 Description:
-	*** *** ***
+	Count and tabulate timestamped line-delimited test.
 Arguments
 	*** *** ***
 Options:

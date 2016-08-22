@@ -8,7 +8,10 @@ const constants = {
 	},
 	timestamps: {
 		syslog: {
-			regex: '[a-zA-z]{3}[ ]+[0-9]{1,2}[ ]+[0-9]{1,2}:[0-9]+:[0-9]+'
+			regex: /[a-zA-z]{3}[ ]+[0-9]{1,2}[ ]+[0-9]{1,2}:[0-9]+:[0-9]+/
+		},
+		iso: {
+			regex: /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/i
 		}
 	},
 	characters: {
