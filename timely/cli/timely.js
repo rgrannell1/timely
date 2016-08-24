@@ -32,7 +32,7 @@ Options:
 	-s <time>, --since <time>    The time from which to include lines. By default, this is set to the start of UNIX-time, 1970.
 	-u <time>, --until <time>    The time after which to exclude lines. By default, this is set to the start of UNIX-time, 1970.
 	-f <fmt>, --format <fmt>     The time format. [default: "syslog"]
-	-d <str>, --display <str>    The method by which to display the summarised input. [default: "json"]
+	-d <str>, --display <str>    The method by which to display the summarised input. [default: "histogram"]
 	-m <str>, --filter <str>     Only analyse logs that match the supplied regular expression filter(s) [default: "."]
 	-h, --help                   Display this documentation.
 

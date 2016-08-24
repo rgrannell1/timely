@@ -13,4 +13,3 @@ parts:
     plugin: nodejs
     node-packages:
       - rgrannell1/timely
-    node-engine: 5.4.0

@@ -34,11 +34,11 @@ const displayBuckets = (buckets, options) => {
 
 displayBuckets.json = (buckets, options) => {
 
-	const bucketSummary = sortBuckets(buckets.buckets).map( ({count, bucketDate}) => {
+	const bucketSummary = sortBuckets(buckets.buckets).map(bucket => {
 
 		return {
-			time: bucketDate.getTime( ),
-			count
+			time:  bucket.bucketDate.getTime( ),
+			count: bucket.count
 		}
 
 	})
