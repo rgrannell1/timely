@@ -74,7 +74,7 @@ const timely = rawArgs => {
 		})
 
 
-	}, 0.1 * constants.units.secondsInMilliseconds)
+	}, 0.5 * constants.units.secondsInMilliseconds)
 
 
 	readline.createInterface({input: process.stdin})

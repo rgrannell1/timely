@@ -15,7 +15,6 @@ const constants = {
 		}
 	},
 	characters: {
-//		fullBar:    '█'
 		fullBar:    '■'
 	},
 	escapeSequences: {
