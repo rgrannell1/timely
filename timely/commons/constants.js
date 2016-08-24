@@ -15,7 +15,8 @@ const constants = {
 		}
 	},
 	characters: {
-		fullBar:    '█'
+//		fullBar:    '█'
+		fullBar:    '■'
 	},
 	escapeSequences: {
 		lineUp:     '\x1b[A',
