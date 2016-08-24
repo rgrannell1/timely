@@ -5,7 +5,6 @@
 
 
 
-const moment    = require('moment')
 const chrono    = require('chrono-node')
 
 const constants = require('../commons/constants')

@@ -5,6 +5,7 @@
 
 
 const moment    = require('moment')
+const ansi      = require('ansi-styles')
 
 const constants = require('../commons/constants')
 
@@ -45,8 +46,8 @@ displayBuckets.json = (buckets, options) => {
 	console.log( JSON.stringify({
 		buckets:   bucketSummary,
 		summary:   {
-			startTime:     buckets.extrema.min.getTime( ),
-			endTime:       buckets.extrema.max.getTime( ),
+			startTime:     buckets.dateExtrema.min.getTime( ),
+			endTime:       buckets.dateExtrema.max.getTime( ),
 			count:         bucketSummary.length,
 			bucketSeconds: options.bucket
 		}
@@ -54,15 +55,15 @@ displayBuckets.json = (buckets, options) => {
 
 }
 
-displayBuckets.histogram = (buckets, options) => {
+displayBuckets.histogram = (buckets) => {
 
 	var partIndex       = Infinity
 	const optionalParts = ['YYYY', 'MMM', 'Do']
 
 	optionalParts.forEach((part, index) => {
 
-		const minPart = moment(buckets.extrema.min).format(part)
-		const maxPart = moment(buckets.extrema.max).format(part)
+		const minPart = moment(buckets.dateExtrema.min).format(part)
+		const maxPart = moment(buckets.dateExtrema.max).format(part)
 
 		if (minPart !== maxPart) {
 			partIndex = index
@@ -75,11 +76,9 @@ displayBuckets.histogram = (buckets, options) => {
 		return Math.max(max, current.count)
 	}, -Infinity)
 
-	const totalCount = sortedBuckets.reduce((acc, current) => acc + current.count, 0)
-
+	const totalCount    = sortedBuckets.reduce((acc, current) => acc + current.count, 0)
 	const terminalWidth = 100
-
-		var message = ''
+	var message         = ''
 
 	sortedBuckets.forEach(bucket => {
 
@@ -99,10 +98,11 @@ displayBuckets.histogram = (buckets, options) => {
 	})
 
 	message += '-'.repeat(terminalWidth) + '\n'
-	message += `max matches:\t${maximumCount}\n`
-	message += `total matches:\t${totalCount}\n`
-	message += `start date:\t${ moment(buckets.extrema.min).format('YYYY MMM Do hh:mm:ss') }\n`
-	message += `end date:\t${   moment(buckets.extrema.max).format('YYYY MMM Do hh:mm:ss') }\n`
+
+	message += ansi.cyan.open + 'max matches:\t'   + ansi.cyan.close + maximumCount + '\n'
+	message += ansi.cyan.open + 'total matches:\t' + ansi.cyan.close + totalCount + '\n'
+	message += ansi.cyan.open + 'start date:\t'    + ansi.cyan.close + moment(buckets.dateExtrema.min).format('YYYY MMM Do hh:mm:ss') + '\n'
+	message += ansi.cyan.open + 'end date:\t'      + ansi.cyan.close + moment(buckets.dateExtrema.max).format('YYYY MMM Do hh:mm:ss') + '\n'
 
 	console.log(message)
 

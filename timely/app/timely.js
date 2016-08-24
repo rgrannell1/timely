@@ -55,6 +55,10 @@ const timely = rawArgs => {
 		extrema: {
 			max: new Date(0),
 			min: new Date(2 * Date.now( ))
+		},
+		dateExtrema: {
+			max: new Date(0),
+			min: new Date(2 * Date.now( ))
 		}
 	}
 
@@ -70,7 +74,7 @@ const timely = rawArgs => {
 		})
 
 
-	}, constants.units.secondsInMilliseconds)
+	}, 0.1 * constants.units.secondsInMilliseconds)
 
 
 	readline.createInterface({input: process.stdin})
