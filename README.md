@@ -1,6 +1,6 @@
 # timely 0.1.0
 
-<img src="timely.png"> </img>
+<img src="timely.gif"> </img>
 
 ### Usage
 
